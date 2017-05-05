@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Spellbook3API.Models;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Spellbook3API
 {
@@ -28,7 +33,20 @@ namespace Spellbook3API
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling =
+                                           Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200"));
+            });
+
+            services.AddDbContext<SpellbookContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SpellbookContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +54,13 @@ namespace Spellbook3API
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            //var options = new JwtBearerOptions
+            //{
+            //    Audience = "http://spells.alexkibler.com/api",
+            //    Authority = "https://alexkibler.auth0.com/"
+            //};
+            //app.UseJwtBearerAuthentication(options);
+            app.UseCors("AllowSpecificOrigin");
             app.UseMvc();
         }
     }

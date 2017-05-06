@@ -27,6 +27,13 @@ namespace Spellbook3API.Controllers
             return _context.Spellbooks;
         }
 
+        [HttpGet("GetSpellbooksByUserId/{userId}")]
+        public async Task<IActionResult> GetSpellbooksByUserId([FromRoute] string userId)
+        {
+            var spellbooks = await _context.Spellbooks.Where(x => x.UserId == userId).ToListAsync();
+            return Ok(spellbooks);
+        }
+
         // GET: api/Spellbooks/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSpellbook([FromRoute] int id)
@@ -42,8 +49,8 @@ namespace Spellbook3API.Controllers
             {
                 return NotFound();
             }
-            var spellbookSpells = await _context.SpellbookSpell.Where(x => x.SpellbookId == id).Select(x => x.Spell).ToListAsync();
-            spellbook.Spells = spellbookSpells.Select(x => new SpellSimple { Name = x.Name, Level = x.Level, Id = x.SpellId, Class = x.Class }).ToList();
+
+            spellbook.Spells = await GetSpellsFromSpellbookId(spellbook.SpellbookId);
             return Ok(spellbook);
         }
 
@@ -63,6 +70,11 @@ namespace Spellbook3API.Controllers
             var spellbook = await _context.Spellbooks.Where(x => x.SpellbookId == id).FirstOrDefaultAsync();
             spellbook.Name = updatedSpellbook.Name ?? spellbook.Name;
             spellbook.UserId = updatedSpellbook.UserId ?? spellbook.UserId;
+            spellbook.Description = updatedSpellbook.Description ?? spellbook.Description;
+            spellbook.CharacterSheetUrl = updatedSpellbook.CharacterSheetUrl ?? spellbook.CharacterSheetUrl;
+            spellbook.Class = updatedSpellbook.Class.ToLower() ?? spellbook.Class.ToLower();            
+            spellbook.ImageUrl = updatedSpellbook.ImageUrl ?? spellbook.ImageUrl;
+            spellbook.DateModified = DateTime.UtcNow;
             try
             { 
                 _context.Attach(spellbook);
@@ -81,7 +93,7 @@ namespace Spellbook3API.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(spellbook);
         }
 
         // POST: api/Spellbooks
@@ -92,7 +104,8 @@ namespace Spellbook3API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            spellbook.DateCreated = DateTime.UtcNow;
+            spellbook.DateModified = DateTime.UtcNow;
             _context.Spellbooks.Add(spellbook);
             await _context.SaveChangesAsync();
 
@@ -167,6 +180,12 @@ namespace Spellbook3API.Controllers
         private bool SpellbookExists(int id)
         {
             return _context.Spellbooks.Any(e => e.SpellbookId == id);
+        }
+
+        private async Task<List<SpellSimple>> GetSpellsFromSpellbookId(int id)
+        {
+            var spellbookSpells = await _context.SpellbookSpell.Where(x => x.SpellbookId == id).Select(x => x.Spell).ToListAsync();
+            return spellbookSpells.Select(x => new SpellSimple { Name = x.Name, Level = x.Level, Id = x.SpellId, Class = x.Class }).ToList();
         }
     }
 

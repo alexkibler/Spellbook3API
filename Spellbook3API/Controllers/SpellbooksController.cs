@@ -30,7 +30,7 @@ namespace Spellbook3API.Controllers
         [HttpGet("GetSpellbooksByUserId/{userId}")]
         public async Task<IActionResult> GetSpellbooksByUserId([FromRoute] string userId)
         {
-            var spellbooks = await _context.Spellbooks.Where(x => x.UserId == userId).ToListAsync();
+            var spellbooks = await _context.Spellbooks.Where(x => x.UserId == userId && !x.IsDeleted).ToListAsync();
             return Ok(spellbooks);
         }
 
@@ -74,6 +74,7 @@ namespace Spellbook3API.Controllers
             spellbook.CharacterSheetUrl = updatedSpellbook.CharacterSheetUrl ?? spellbook.CharacterSheetUrl;
             spellbook.Class = updatedSpellbook.Class.ToLower() ?? spellbook.Class.ToLower();            
             spellbook.ImageUrl = updatedSpellbook.ImageUrl ?? spellbook.ImageUrl;
+            spellbook.IsDeleted = spellbook.IsDeleted;
             spellbook.DateModified = DateTime.UtcNow;
             try
             { 
@@ -137,7 +138,7 @@ namespace Spellbook3API.Controllers
         }
 
         // DELETE: api/Spellbooks/5
-        [HttpDelete("{id}")]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> DeleteSpellbook([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -151,7 +152,7 @@ namespace Spellbook3API.Controllers
                 return NotFound();
             }
 
-            _context.Spellbooks.Remove(spellbook);
+            spellbook.IsDeleted = true;
             await _context.SaveChangesAsync();
 
             return Ok(spellbook);

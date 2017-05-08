@@ -41,12 +41,12 @@ namespace Spellbook3API
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:4200"));
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
             services.AddDbContext<SpellbookContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SpellbookContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("Express")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +60,7 @@ namespace Spellbook3API
             //    Authority = "https://alexkibler.auth0.com/"
             //};
             //app.UseJwtBearerAuthentication(options);
-            app.UseCors("AllowSpecificOrigin");
+            app.UseCors("AllowAll");
             app.UseMvc();
         }
     }

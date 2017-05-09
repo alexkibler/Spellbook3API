@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
     <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
-    <ApplicationInsightsResourceId>/subscriptions/6735e306-ed38-42bf-b51d-6cca5d34e703/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Spellbook3API</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/eb58228c-fc81-47d5-b2a2-1ff5070248a9/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Spellbook3API</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/6735e306-ed38-42bf-b51d-6cca5d34e703/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Spellbook3API</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 

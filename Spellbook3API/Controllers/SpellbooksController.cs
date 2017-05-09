@@ -10,7 +10,7 @@ using Spellbook3API.Models;
 namespace Spellbook3API.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Spellbooks")]
+    [Route("Spellbooks")]
     public class SpellbooksController : Controller
     {
         private readonly SpellbookContext _context;

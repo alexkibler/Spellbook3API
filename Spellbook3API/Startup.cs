@@ -46,7 +46,7 @@ namespace Spellbook3API
             });
 
             services.AddDbContext<SpellbookContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Express")));
+                    options.UseSqlServer(Configuration.GetConnectionString("Azure")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

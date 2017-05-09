@@ -10,7 +10,7 @@ using Spellbook3API.Models;
 namespace Spellbook3API.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Spells")]
+    [Route("Spells")]
     public class SpellsController : Controller
     {
         private readonly SpellbookContext _context;
@@ -72,6 +72,26 @@ namespace Spellbook3API.Controllers
 
             try
             {
+                var spellToUpdate = _context.Spells.Where(x => x.SpellId == id).FirstOrDefault();
+                spellToUpdate.Archetype = spell.Archetype;
+                spellToUpdate.Casting_time = spell.Casting_time;
+                spellToUpdate.Circles = spell.Circles;
+                spellToUpdate.Class = spell.Class;
+                spellToUpdate.Components = spell.Components;
+                spellToUpdate.Concentration = spell.Concentration;
+                spellToUpdate.Desc = spell.Desc;
+                spellToUpdate.Domains = spell.Domains;
+                spellToUpdate.Duration = spell.Duration;
+                spellToUpdate.Higher_level = spell.Higher_level;
+                spellToUpdate.Level = spell.Level;
+                spellToUpdate.Material = spell.Material;
+                spellToUpdate.Name = spell.Name;
+                spellToUpdate.Oaths = spell.Oaths;
+                spellToUpdate.Page = spell.Page;
+                spellToUpdate.Patrons = spell.Patrons;
+                spellToUpdate.Range = spell.Range;
+                spellToUpdate.Ritual = spell.Ritual;
+                spellToUpdate.School = spell.School;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

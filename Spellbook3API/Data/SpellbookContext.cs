@@ -10,13 +10,14 @@ namespace Spellbook3API.Models
     public class SpellbookContext : DbContext
     {
         public SpellbookContext(DbContextOptions<SpellbookContext> options) : base(options)
-        {
+        {            
 
         }
         public DbSet<Spell> Spells { get; set; }
 
         public DbSet<Spellbook> Spellbooks { get; set; }
         public DbSet<SpellbookSpell> SpellbookSpell { get; set; }
+        public DbSet<Character> Characters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -8,9 +8,10 @@ using Spellbook3API.Models;
 namespace Spellbook3API.Migrations
 {
     [DbContext(typeof(SpellbookContext))]
-    partial class SpellbookContextModelSnapshot : ModelSnapshot
+    [Migration("20170510161415_m13")]
+    partial class m13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -204,38 +205,68 @@ namespace Spellbook3API.Migrations
                     b.ToTable("DeathSaves");
                 });
 
+            modelBuilder.Entity("Spellbook3API.Models.SavingThrow", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool?>("Proficient");
+
+                    b.Property<int?>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SavingThrow");
+                });
+
             modelBuilder.Entity("Spellbook3API.Models.SavingThrows", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("CharismaProficient");
+                    b.Property<int?>("CharismaId");
 
-                    b.Property<int>("CharismaValue");
+                    b.Property<int?>("ConstitutionId");
 
-                    b.Property<bool>("ConstitutionProficient");
+                    b.Property<int?>("DexterityId");
 
-                    b.Property<int>("ConstitutionValue");
+                    b.Property<int?>("IntelligenceId");
 
-                    b.Property<bool>("DexterityProficient");
+                    b.Property<int?>("StrengthId");
 
-                    b.Property<int>("DexterityValue");
-
-                    b.Property<bool>("IntelligenceProficient");
-
-                    b.Property<int>("IntelligenceValue");
-
-                    b.Property<bool>("StrengthProficient");
-
-                    b.Property<int>("StrengthValue");
-
-                    b.Property<bool>("WisdomProficient");
-
-                    b.Property<int>("WisdomValue");
+                    b.Property<int?>("WisdomId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CharismaId");
+
+                    b.HasIndex("ConstitutionId");
+
+                    b.HasIndex("DexterityId");
+
+                    b.HasIndex("IntelligenceId");
+
+                    b.HasIndex("StrengthId");
+
+                    b.HasIndex("WisdomId");
+
                     b.ToTable("SavingThrows");
+                });
+
+            modelBuilder.Entity("Spellbook3API.Models.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool?>("Proficient1");
+
+                    b.Property<bool?>("Proficient2");
+
+                    b.Property<int?>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Skill");
                 });
 
             modelBuilder.Entity("Spellbook3API.Models.Skills", b =>
@@ -243,109 +274,75 @@ namespace Spellbook3API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("AcrobaticsProficient1");
+                    b.Property<int?>("AcrobaticsId");
 
-                    b.Property<bool>("AcrobaticsProficient2");
+                    b.Property<int?>("AnimalHandlingId");
 
-                    b.Property<int>("AcrobaticsValue");
+                    b.Property<int?>("ArcanaId");
 
-                    b.Property<bool>("AnimalHandlingProficient1");
+                    b.Property<int?>("AthleticsId");
 
-                    b.Property<bool>("AnimalHandlingProficient2");
+                    b.Property<int?>("DeceptionId");
 
-                    b.Property<int>("AnimalHandlingValue");
+                    b.Property<int?>("HistoryId");
 
-                    b.Property<bool>("ArcanaProficient1");
+                    b.Property<int?>("InsightId");
 
-                    b.Property<bool>("ArcanaProficient2");
+                    b.Property<int?>("IntimidationId");
 
-                    b.Property<int>("ArcanaValue");
+                    b.Property<int?>("InvestigationId");
 
-                    b.Property<bool>("AthleticsProficient1");
+                    b.Property<int?>("MedicineId");
 
-                    b.Property<bool>("AthleticsProficient2");
+                    b.Property<int?>("PerceptionId");
 
-                    b.Property<int>("AthleticsValue");
+                    b.Property<int?>("PerformanceId");
 
-                    b.Property<bool>("DeceptionProficient1");
+                    b.Property<int?>("PersuasionId");
 
-                    b.Property<bool>("DeceptionProficient2");
+                    b.Property<int?>("ReligionId");
 
-                    b.Property<int>("DeceptionValue");
+                    b.Property<int?>("SleightOfHandId");
 
-                    b.Property<bool>("HistoryProficient1");
+                    b.Property<int?>("StealthId");
 
-                    b.Property<bool>("HistoryProficient2");
-
-                    b.Property<int>("HistoryValue");
-
-                    b.Property<bool>("InsightProficient1");
-
-                    b.Property<bool>("InsightProficient2");
-
-                    b.Property<int>("InsightValue");
-
-                    b.Property<bool>("IntimidationProficient1");
-
-                    b.Property<bool>("IntimidationProficient2");
-
-                    b.Property<int>("IntimidationValue");
-
-                    b.Property<bool>("InvestigationProficient1");
-
-                    b.Property<bool>("InvestigationProficient2");
-
-                    b.Property<int>("InvestigationValue");
-
-                    b.Property<bool>("MedicineProficient1");
-
-                    b.Property<bool>("MedicineProficient2");
-
-                    b.Property<int>("MedicineValue");
-
-                    b.Property<bool>("PerceptionProficient1");
-
-                    b.Property<bool>("PerceptionProficient2");
-
-                    b.Property<int>("PerceptionValue");
-
-                    b.Property<bool>("PerformanceProficient1");
-
-                    b.Property<bool>("PerformanceProficient2");
-
-                    b.Property<int>("PerformanceValue");
-
-                    b.Property<bool>("PersuasionProficient1");
-
-                    b.Property<bool>("PersuasionProficient2");
-
-                    b.Property<int>("PersuasionValue");
-
-                    b.Property<bool>("ReligionProficient1");
-
-                    b.Property<bool>("ReligionProficient2");
-
-                    b.Property<int>("ReligionValue");
-
-                    b.Property<bool>("SleightOfHandProficient1");
-
-                    b.Property<bool>("SleightOfHandProficient2");
-
-                    b.Property<int>("SleightOfHandValue");
-
-                    b.Property<bool>("StealthProficient1");
-
-                    b.Property<bool>("StealthProficient2");
-
-                    b.Property<int>("StealthValue");
-
-                    b.Property<bool>("SurvivalProficient1");
-
-                    b.Property<bool>("SurvivalProficient2");
-
-                    b.Property<int>("SurvivalValue");
+                    b.Property<int?>("SurvivalId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AcrobaticsId");
+
+                    b.HasIndex("AnimalHandlingId");
+
+                    b.HasIndex("ArcanaId");
+
+                    b.HasIndex("AthleticsId");
+
+                    b.HasIndex("DeceptionId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("InsightId");
+
+                    b.HasIndex("IntimidationId");
+
+                    b.HasIndex("InvestigationId");
+
+                    b.HasIndex("MedicineId");
+
+                    b.HasIndex("PerceptionId");
+
+                    b.HasIndex("PerformanceId");
+
+                    b.HasIndex("PersuasionId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("SleightOfHandId");
+
+                    b.HasIndex("StealthId");
+
+                    b.HasIndex("SurvivalId");
 
                     b.ToTable("Skills");
                 });
@@ -503,6 +500,104 @@ namespace Spellbook3API.Migrations
                     b.HasOne("Spellbook3API.Models.Character")
                         .WithMany("ClassLevels")
                         .HasForeignKey("CharacterId");
+                });
+
+            modelBuilder.Entity("Spellbook3API.Models.SavingThrows", b =>
+                {
+                    b.HasOne("Spellbook3API.Models.SavingThrow", "Charisma")
+                        .WithMany()
+                        .HasForeignKey("CharismaId");
+
+                    b.HasOne("Spellbook3API.Models.SavingThrow", "Constitution")
+                        .WithMany()
+                        .HasForeignKey("ConstitutionId");
+
+                    b.HasOne("Spellbook3API.Models.SavingThrow", "Dexterity")
+                        .WithMany()
+                        .HasForeignKey("DexterityId");
+
+                    b.HasOne("Spellbook3API.Models.SavingThrow", "Intelligence")
+                        .WithMany()
+                        .HasForeignKey("IntelligenceId");
+
+                    b.HasOne("Spellbook3API.Models.SavingThrow", "Strength")
+                        .WithMany()
+                        .HasForeignKey("StrengthId");
+
+                    b.HasOne("Spellbook3API.Models.SavingThrow", "Wisdom")
+                        .WithMany()
+                        .HasForeignKey("WisdomId");
+                });
+
+            modelBuilder.Entity("Spellbook3API.Models.Skills", b =>
+                {
+                    b.HasOne("Spellbook3API.Models.Skill", "Acrobatics")
+                        .WithMany()
+                        .HasForeignKey("AcrobaticsId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "AnimalHandling")
+                        .WithMany()
+                        .HasForeignKey("AnimalHandlingId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Arcana")
+                        .WithMany()
+                        .HasForeignKey("ArcanaId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Athletics")
+                        .WithMany()
+                        .HasForeignKey("AthleticsId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Deception")
+                        .WithMany()
+                        .HasForeignKey("DeceptionId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Insight")
+                        .WithMany()
+                        .HasForeignKey("InsightId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Intimidation")
+                        .WithMany()
+                        .HasForeignKey("IntimidationId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Investigation")
+                        .WithMany()
+                        .HasForeignKey("InvestigationId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Medicine")
+                        .WithMany()
+                        .HasForeignKey("MedicineId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Perception")
+                        .WithMany()
+                        .HasForeignKey("PerceptionId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Performance")
+                        .WithMany()
+                        .HasForeignKey("PerformanceId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Persuasion")
+                        .WithMany()
+                        .HasForeignKey("PersuasionId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Religion")
+                        .WithMany()
+                        .HasForeignKey("ReligionId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "SleightOfHand")
+                        .WithMany()
+                        .HasForeignKey("SleightOfHandId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Stealth")
+                        .WithMany()
+                        .HasForeignKey("StealthId");
+
+                    b.HasOne("Spellbook3API.Models.Skill", "Survival")
+                        .WithMany()
+                        .HasForeignKey("SurvivalId");
                 });
 
             modelBuilder.Entity("Spellbook3API.Models.SpellbookSpell", b =>

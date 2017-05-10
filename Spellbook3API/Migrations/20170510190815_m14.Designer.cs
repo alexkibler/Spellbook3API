@@ -8,9 +8,10 @@ using Spellbook3API.Models;
 namespace Spellbook3API.Migrations
 {
     [DbContext(typeof(SpellbookContext))]
-    partial class SpellbookContextModelSnapshot : ModelSnapshot
+    [Migration("20170510190815_m14")]
+    partial class m14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

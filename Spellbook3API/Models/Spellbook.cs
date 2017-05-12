@@ -16,9 +16,10 @@ namespace Spellbook3API.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         public string ImageUrl { get; set; }
-        public string CharacterSheetUrl { get; set; }
         public bool IsDeleted { get; set; }
         public List<SpellSimple> Spells { get; set; }
+        public Character CharacterSheet { get; set; }
+        public int CharacterSheetId { get; set; }
         [IgnoreDataMember]
         public virtual List<SpellbookSpell> SpellbookSpells { get; set; }
     }

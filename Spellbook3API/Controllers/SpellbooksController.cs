@@ -43,7 +43,8 @@ namespace Spellbook3API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var spellbook = await _context.Spellbooks.SingleOrDefaultAsync(m => m.SpellbookId == id);
+            var spellbook = await _context.Spellbooks                
+                .SingleOrDefaultAsync(m => m.SpellbookId == id);
 
             if (spellbook == null)
             {
@@ -71,7 +72,6 @@ namespace Spellbook3API.Controllers
             spellbook.Name = updatedSpellbook.Name ?? spellbook.Name;
             spellbook.UserId = updatedSpellbook.UserId ?? spellbook.UserId;
             spellbook.Description = updatedSpellbook.Description ?? spellbook.Description;
-            spellbook.CharacterSheetUrl = updatedSpellbook.CharacterSheetUrl ?? spellbook.CharacterSheetUrl;
             spellbook.Class = updatedSpellbook.Class.ToLower() ?? spellbook.Class.ToLower();            
             spellbook.ImageUrl = updatedSpellbook.ImageUrl ?? spellbook.ImageUrl;
             spellbook.IsDeleted = spellbook.IsDeleted;

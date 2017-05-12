@@ -17,6 +17,7 @@ public string Race { get; set; }
 public string Alignment { get; set; }
 public int? ProficiencyBonus { get; set; }
 public bool Inspiration { get; set; }
+public int? PassivePerception { get; set; }
 public int? ArmorClass { get; set; }
 public int? Initiative { get; set; }
 public int? Speed { get; set; }
@@ -30,6 +31,7 @@ public string Ideals { get; set; }
 public string Bonds { get; set; }
 public string Flaws { get; set; }
 public string ClassFeatures { get; set; }
+public int SpellbookId { get; set; }
 public DeathSaves DeathSaves{ get; set; }
 public List<ClassLevel> ClassLevels { get; set; }
 public AbilityScores AbilityScores { get; set; }

@@ -8,9 +8,10 @@ using Spellbook3API.Models;
 namespace Spellbook3API.Migrations
 {
     [DbContext(typeof(SpellbookContext))]
-    partial class SpellbookContextModelSnapshot : ModelSnapshot
+    [Migration("20170511144302_m18")]
+    partial class m18
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -114,8 +115,6 @@ namespace Spellbook3API.Migrations
                     b.Property<int?>("MaxHP");
 
                     b.Property<string>("Name");
-
-                    b.Property<int?>("PassivePerception");
 
                     b.Property<string>("PersonalityTraits");
 

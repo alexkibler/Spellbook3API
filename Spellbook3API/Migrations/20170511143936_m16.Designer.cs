@@ -8,9 +8,10 @@ using Spellbook3API.Models;
 namespace Spellbook3API.Migrations
 {
     [DbContext(typeof(SpellbookContext))]
-    partial class SpellbookContextModelSnapshot : ModelSnapshot
+    [Migration("20170511143936_m16")]
+    partial class m16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -115,8 +116,6 @@ namespace Spellbook3API.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("PassivePerception");
-
                     b.Property<string>("PersonalityTraits");
 
                     b.Property<int?>("ProficiencyBonus");
@@ -128,8 +127,6 @@ namespace Spellbook3API.Migrations
                     b.Property<int?>("SkillsId");
 
                     b.Property<int?>("Speed");
-
-                    b.Property<int>("SpellbookId");
 
                     b.Property<string>("TotalHitDice");
 
@@ -409,9 +406,7 @@ namespace Spellbook3API.Migrations
                     b.Property<int>("SpellbookId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CharacterId");
-
-                    b.Property<int>("CharacterSheetId");
+                    b.Property<int?>("CharacterSheetId");
 
                     b.Property<string>("Class");
 
@@ -431,7 +426,7 @@ namespace Spellbook3API.Migrations
 
                     b.HasKey("SpellbookId");
 
-                    b.HasIndex("CharacterId");
+                    b.HasIndex("CharacterSheetId");
 
                     b.ToTable("Spellbooks");
                 });
@@ -517,7 +512,7 @@ namespace Spellbook3API.Migrations
                 {
                     b.HasOne("Spellbook3API.Models.Character", "CharacterSheet")
                         .WithMany()
-                        .HasForeignKey("CharacterId");
+                        .HasForeignKey("CharacterSheetId");
                 });
 
             modelBuilder.Entity("Spellbook3API.Models.SpellbookSpell", b =>

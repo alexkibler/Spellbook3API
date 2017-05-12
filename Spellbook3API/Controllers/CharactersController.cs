@@ -78,6 +78,11 @@ namespace Spellbook3API.Controllers
                 return BadRequest();
             }
 
+            if (character.SpellbookId == 0)
+            {
+                return BadRequest();
+            }
+
 
             try
             {
@@ -107,10 +112,16 @@ namespace Spellbook3API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            var sb = _context.Spellbooks.SingleOrDefault(x => x.SpellbookId == character.SpellbookId);
+            if (sb == null)
+            {
+                return BadRequest();
+            }            
             _context.Characters.Add(character);
             await _context.SaveChangesAsync();
 
+            sb.CharacterSheetId = character.Id;
+            await _context.SaveChangesAsync();
             return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
         }
 

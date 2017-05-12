@@ -8,9 +8,10 @@ using Spellbook3API.Models;
 namespace Spellbook3API.Migrations
 {
     [DbContext(typeof(SpellbookContext))]
-    partial class SpellbookContextModelSnapshot : ModelSnapshot
+    [Migration("20170511144101_m17")]
+    partial class m17
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -115,8 +116,6 @@ namespace Spellbook3API.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("PassivePerception");
-
                     b.Property<string>("PersonalityTraits");
 
                     b.Property<int?>("ProficiencyBonus");
@@ -144,6 +143,9 @@ namespace Spellbook3API.Migrations
                     b.HasIndex("SavingThrowsId");
 
                     b.HasIndex("SkillsId");
+
+                    b.HasIndex("SpellbookId")
+                        .IsUnique();
 
                     b.ToTable("Characters");
                 });
@@ -409,10 +411,6 @@ namespace Spellbook3API.Migrations
                     b.Property<int>("SpellbookId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CharacterId");
-
-                    b.Property<int>("CharacterSheetId");
-
                     b.Property<string>("Class");
 
                     b.Property<DateTime>("DateCreated");
@@ -430,8 +428,6 @@ namespace Spellbook3API.Migrations
                     b.Property<string>("UserId");
 
                     b.HasKey("SpellbookId");
-
-                    b.HasIndex("CharacterId");
 
                     b.ToTable("Spellbooks");
                 });
@@ -504,19 +500,17 @@ namespace Spellbook3API.Migrations
                     b.HasOne("Spellbook3API.Models.Skills", "Skills")
                         .WithMany()
                         .HasForeignKey("SkillsId");
+
+                    b.HasOne("Spellbook3API.Models.Spellbook")
+                        .WithOne("CharacterSheet")
+                        .HasForeignKey("Spellbook3API.Models.Character", "SpellbookId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Spellbook3API.Models.ClassLevel", b =>
                 {
                     b.HasOne("Spellbook3API.Models.Character")
                         .WithMany("ClassLevels")
-                        .HasForeignKey("CharacterId");
-                });
-
-            modelBuilder.Entity("Spellbook3API.Models.Spellbook", b =>
-                {
-                    b.HasOne("Spellbook3API.Models.Character", "CharacterSheet")
-                        .WithMany()
                         .HasForeignKey("CharacterId");
                 });
 

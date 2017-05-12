@@ -18,6 +18,9 @@ namespace Spellbook3API.Models
         public DbSet<Spellbook> Spellbooks { get; set; }
         public DbSet<SpellbookSpell> SpellbookSpell { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<ClassLevel> ClassLevel { get; set; }
+        public DbSet<Ammo> Ammo { get; set; }
+        public DbSet<Attack> Attack { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

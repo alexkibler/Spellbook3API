@@ -56,9 +56,44 @@ namespace Spellbook3API.Controllers
                 .Include(x => x.SavingThrows)
                 .Include(x => x.Skills).SingleOrDefaultAsync(m => m.Id == id);
 
+
             if (character == null)
             {
                 return NotFound();
+            }
+
+            if (character.AbilityScores == null)
+            {
+                character.AbilityScores = new AbilityScores();
+            }
+
+            if (character.Ammos == null)
+            {
+                character.Ammos = new List<Ammo>();
+            }
+            if (character.Attacks == null)
+            {
+                character.Attacks = new List<Attack>();
+            }
+            if (character.ClassLevels == null)
+            {
+                character.ClassLevels = new List<ClassLevel>();
+            }
+            if (character.Currency == null)
+            {
+                character.Currency = new Currency();
+            }
+            if (character.DeathSaves == null)
+            {
+                character.DeathSaves = new DeathSaves();
+            }
+            if (character.SavingThrows == null)
+            {
+                character.SavingThrows = new SavingThrows();
+            }
+            if (character.Skills == null)
+            {
+                character.Skills = new Skills();
             }
 
             return Ok(character);
@@ -87,7 +122,38 @@ namespace Spellbook3API.Controllers
             try
             {
                 _context.Update(character);
+                var classLevels = character.ClassLevels.Select(x => x).ToList();
+                var ammos = character.Ammos.Select(x => x).ToList();
+                var attacks = character.Attacks.Select(x => x).ToList();
+                var c = _context.Characters
+                    .Include(x => x.Ammos)
+                    .Include(x => x.Attacks)
+                    .Include(x => x.ClassLevels)
+                    .SingleOrDefault(x => x.Id == character.Id);
+                foreach (var a in c.Ammos)
+                {
+                    if (!ammos.Contains(a))
+                    {
+                        _context.Ammo.Remove(a);
+                    }
+                }
+                foreach (var a in c.Attacks)
+                {
+                    if (!attacks.Contains(a))
+                    {
+                        _context.Attack.Remove(a);
+                    }
+                }
+                foreach (var a in c.ClassLevels)
+                {
+                    if (!classLevels.Contains(a))
+                    {
+                        _context.ClassLevel.Remove(a);
+                    }
+                }
                 await _context.SaveChangesAsync();
+                
+
             }
             catch (DbUpdateConcurrencyException)
             {
